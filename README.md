@@ -1,0 +1,1 @@
+# Krisha.kz-Django
