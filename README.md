@@ -1,1 +1,1 @@
-# Krisha.kz-Django
+# Krisha.kz - alternative version, only Hotel available
