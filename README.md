@@ -1,1 +1,1 @@
-# Krisha.kz - alternative version, only Hotel available
+Krisha.kz - alternative version, only Hotel available
