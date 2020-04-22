@@ -4,24 +4,24 @@ from hotel.models import Hotel
 
 class RoomTypeManager(models.Manager):
     def single_rooms(self):
-        super(RoomTypeManager, self).get_queryset().filter(type=1)
+        return super(RoomTypeManager, self).get_queryset().filter(type=1)
 
     def double_rooms(self):
-        super(RoomTypeManager, self).get_queryset().filter(type=2)
+        return super(RoomTypeManager, self).get_queryset().filter(type=2)
 
     def triple_rooms(self):
-        super(RoomTypeManager, self).get_queryset().filter(type=3)
+        return super(RoomTypeManager, self).get_queryset().filter(type=3)
 
     def quad_rooms(self):
-        super(RoomTypeManager, self).get_queryset().filter(type=4)
+        return super(RoomTypeManager, self).get_queryset().filter(type=4)
 
 
 class RoomStatusManager(models.Manager):
     def reserved_rooms(self):
-        super(RoomStatusManager, self).get_queryset().filter(status=True)
+        return super(RoomStatusManager, self).get_queryset().filter(status=True)
 
     def free_rooms(self):
-        super(RoomStatusManager, self).get_queryset().filter(status=False)
+        return super(RoomStatusManager, self).get_queryset().filter(status=False)
 
 
 # Create your models here.
@@ -46,8 +46,3 @@ class Room(models.Model):
     class Meta:
         verbose_name = 'Room'
         verbose_name_plural = 'Rooms'
-
-
-
-
-
