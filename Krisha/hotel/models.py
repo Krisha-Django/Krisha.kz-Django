@@ -159,3 +159,7 @@ class Hotel(models.Model):
     @property
     def get_basic_information(self):
         return f'Name: {self.name}. Star: {self.type_by_star}. Description: {self.description}'
+
+    # @property
+    # def get_total_likes(self):
+    #     return self.like
