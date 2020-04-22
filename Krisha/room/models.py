@@ -1,7 +1,8 @@
 from django.db import models
 from hotel.models import Hotel
 
-
+class RoomManager(models.Manager):
+    pass
 class RoomTypeManager(models.Manager):
     def single_rooms(self):
         return super(RoomTypeManager, self).get_queryset().filter(type=1)
@@ -42,6 +43,7 @@ class Room(models.Model):
 
     rooms_by_types = RoomTypeManager()
     rooms_by_status = RoomStatusManager()
+    objects = RoomManager()
 
     class Meta:
         verbose_name = 'Room'

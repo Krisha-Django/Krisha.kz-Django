@@ -92,6 +92,9 @@ class HotelSizeManager(models.Manager):
         return super(HotelSizeManager, self).get_queryset().filter(type_by_size=5)
 
 
+class HotelManager(models.Manager):
+    pass
+
 class Hotel(models.Model):
     TYPE_BY_STAR = (
         (1, "One Star"),
@@ -134,11 +137,12 @@ class Hotel(models.Model):
     type_by_location = models.IntegerField(choices=TYPE_BY_LOCATION, default=1)
     type_by_target = models.IntegerField(choices=TYPE_BY_TARGET, default=1)
     type_by_star = models.IntegerField(choices=TYPE_BY_STAR, default=3)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='hotels')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='hotels',null=True,blank=True)
     address = models.CharField(max_length=255, default=city.name)
     image = models.ImageField(upload_to='hotel_images', null=True, blank=True)
     contact = models.CharField(max_length=20)
 
+    objects = HotelManager()
     by_stars_objects = HotelStarsManager()
     by_target_objects = HotelTargetManager()
     by_location_objects = HotelLocationManager()
