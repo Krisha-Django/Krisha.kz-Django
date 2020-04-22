@@ -88,11 +88,14 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+/migrations
 
 # StyleCop
 StyleCopReport.xml
-
+# PyCharm 
+/.idea
 # Files built by Visual Studio
+*.pyc
 *_i.c
 *_p.c
 *_h.h
