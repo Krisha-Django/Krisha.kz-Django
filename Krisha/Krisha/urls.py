@@ -21,5 +21,7 @@ urlpatterns = [
     path('cities/', include('city.urls')),
     path('comments/',include('comment.urls')),
     path('hotels/',include('hotel.urls')),
-    path('rooms/',include('room.urls'))
+    path('rooms/',include('room.urls')),
+    path('likes/', include('like.urls')),
+    # path('reservations/', include('booking.urls')),
 ]

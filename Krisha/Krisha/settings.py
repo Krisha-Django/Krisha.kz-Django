@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'comment',
     'hotel',
     'room',
-    # 'like',
+    'like',
     'auth_',
     'rest_framework',
     'rest_framework_jwt',
