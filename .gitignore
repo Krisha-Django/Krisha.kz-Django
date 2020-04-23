@@ -88,7 +88,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-# /migrations
+/migrations
 
 # StyleCop
 StyleCopReport.xml
