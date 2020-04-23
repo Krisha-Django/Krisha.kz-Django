@@ -1,8 +1,12 @@
 from django.db import models
 from hotel.models import Hotel
+from auth_.models import MyUser
+
 
 class RoomManager(models.Manager):
     pass
+
+
 class RoomTypeManager(models.Manager):
     def single_rooms(self):
         return super(RoomTypeManager, self).get_queryset().filter(type=1)
@@ -33,11 +37,10 @@ class Room(models.Model):
         (3, 'Triple'),
         (4, 'Quad')
     )
-    room_id = models.IntegerField(primary_key=True)
+    room_number = models.CharField(max_length=10000)
+    room_description = models.CharField(max_length=300, default="Description")
     type = models.IntegerField(choices=TYPE, default=1)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
-    quest_id = models.IntegerField(null=True, blank=True)
-    reservation_id = models.IntegerField(null=True, blank=True)
     status = models.BooleanField(default=False)
     price = models.IntegerField(default=10000)
 
@@ -48,3 +51,6 @@ class Room(models.Model):
     class Meta:
         verbose_name = 'Room'
         verbose_name_plural = 'Rooms'
+
+    def __str__(self):
+        return self.room_number

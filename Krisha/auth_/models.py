@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser, AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import PermissionsMixin, UserManager
@@ -32,6 +31,7 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 class MyUser(MyAbstractUser):
     pass
+
 
 class ProfileManager(models.Manager):
     pass

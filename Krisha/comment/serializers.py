@@ -1,14 +1,14 @@
 from rest_framework import serializers
 from .models import Comment
 from hotel.serializers import HotelShortSerializer
-
+from auth_.serializers import MyUserSerializer
 
 class CommentSerializer(serializers.Serializer):
     text = serializers.CharField(max_length=300)
     created_date = serializers.DateTimeField(required=False)
     hotel = HotelShortSerializer(read_only=True)
+    user = MyUserSerializer(read_only=True)
 
-    # user = UserSerializer(read_only=True)
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
 

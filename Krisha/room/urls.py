@@ -6,3 +6,4 @@ router = DefaultRouter()
 
 router.register(r'', RoomView, basename="rooms")
 urlpatterns = router.urls
+

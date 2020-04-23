@@ -1,5 +1,6 @@
 from django.db import models
 from hotel.models import Hotel
+from auth_.models import MyUser
 from datetime import datetime
 
 
@@ -14,9 +15,9 @@ class CommentManager(models.Manager):
 
 class Comment(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='comments',null=True,blank=True)
-    # author = models.ForeignKey(User, on_delete = models.CASCADE, related _name= "comments")
+    author = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True, blank=True, related_name='comments')
     text = models.CharField(max_length=300)
-    created_date = models.DateTimeField(default=datetime.now,blank=True)
+    created_date = models.DateTimeField(default=datetime.now, blank=True)
     approved = models.BooleanField(default=False)
 
     objects = CommentManager()
