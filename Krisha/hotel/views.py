@@ -1,7 +1,13 @@
-from rest_framework import viewsets, status, mixins
+from django.http import Http404
+from rest_framework import viewsets, status, mixins, generics
 from rest_framework.permissions import IsAuthenticated
 from .serializers import HotelFullSerializer, HotelShortSerializer
+from room.serializers import RoomFullSerializer, RoomShortSerializer
+from comment.serializers import CommentFullSerializer, CommentShortSerializer
+from like.serializers import LikeSerializer
 from .models import Hotel
+
+
 # Create your views here.
 
 
@@ -37,3 +43,51 @@ class HotelView(mixins.CreateModelMixin,
             return Hotel.by_stars_objects.five_starred_hotels()
         else:
             return Hotel.objects.all()
+
+
+class HotelRoomsAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return RoomShortSerializer
+        else:
+            return RoomFullSerializer
+
+    def get_queryset(self):
+        try:
+            hotel = Hotel.objects.get(id=self.kwargs['pk'])
+        except Hotel.DoesNotExist:
+            raise Http404
+        return hotel.rooms.all()
+
+
+class HotelCommentsAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return CommentShortSerializer
+        else:
+            return CommentFullSerializer
+
+    def get_queryset(self):
+        try:
+            hotel = Hotel.objects.get(id=self.kwargs['pk'])
+        except Hotel.DoesNotExist:
+            raise Http404
+        return hotel.comments.all()
+
+class HotelLikesAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, )
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return LikeSerializer
+
+    def get_queryset(self):
+        try:
+            hotel = Hotel.objects.get(id=self.kwargs['pk'])
+        except Hotel.DoesNotExist:
+            raise Http404
+        return hotel.likes.all()

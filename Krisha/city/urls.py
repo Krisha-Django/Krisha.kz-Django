@@ -5,6 +5,7 @@ from . import  views
 urlpatterns = [
     path('',views.city_list),
     path('<int:pk>/',views.city_detail),
+    path('<int:pk>/hotels/', views.CityHotelsAPIView.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
