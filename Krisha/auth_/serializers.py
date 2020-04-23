@@ -3,12 +3,10 @@ from auth_.models import MyUser, Profile
 
 
 class MyUserSerializer(serializers.ModelSerializer):
-    first_name = serializers.ModelSerializer(required=False)
-    second_name = serializers.ModelSerializer(required=False)
-
+    email = serializers.CharField(required=True)
     class Meta:
         model = MyUser
-        fields = ('username', 'email', 'password', 'first_name', 'second_name')
+        fields = ('username', 'is_super_man','email')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -16,4 +14,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user')
+        fields = ('user','city','card_number')

@@ -2,7 +2,7 @@ from rest_framework import generics
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from auth_.serializers import MyUserSerializer
-from auth_.models import MyUser
+from auth_.models import MyUser,Profile
 
 
 class MyUserAPIView(generics.CreateAPIView):
@@ -15,8 +15,9 @@ class MyUserAPIView(generics.CreateAPIView):
     def perform_create(self, serializer):
         username = self.request.data.pop('username')
         password = self.request.data.pop('password')
-        # email = self.request.data.pop('email')
+        email = self.request.data.pop('email')
         user, created = MyUser.objects.get_or_create(username=username)
-        # user.set_email(email)
+        user.email= email
         user.set_password(password)
         user.save()
+
