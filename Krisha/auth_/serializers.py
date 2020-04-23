@@ -3,8 +3,8 @@ from auth_.models import MyUser, Profile
 
 
 class MyUserSerializer(serializers.ModelSerializer):
-    first_name = serializers.ModelSerializer(required=True)
-    second_name = serializers.ModelSerializer(required=True)
+    first_name = serializers.ModelSerializer(required=False)
+    second_name = serializers.ModelSerializer(required=False)
 
     class Meta:
         model = MyUser
@@ -12,7 +12,7 @@ class MyUserSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = MyUserSerializer()
+    user = MyUserSerializer(read_only=True)
 
     class Meta:
         model = Profile

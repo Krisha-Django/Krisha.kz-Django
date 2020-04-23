@@ -1,24 +1,23 @@
+from .models import Reservation
 from rest_framework import serializers
-from .models import Reservation
-from .models import Reservation
-from ..room.serializers import RoomShortSerializer, RoomFullSerializer
-from ..auth_.serializers import MyUserSerializer
-from ..hotel.serializers import HotelFullSerializer
+from room.serializers import RoomShortSerializer, RoomFullSerializer
+from auth_.serializers import MyUserSerializer
+from hotel.serializers import HotelFullSerializer, HotelShortSerializer
 
 
 class ReservationShortSerializer(serializers.ModelSerializer):
-    reservation_id = serializers.IntegerField(required=False)
-    room = RoomFullSerializer()
-    guest = MyUserSerializer()
+    # # hotel = HotelShortSerializer(read_only=True)
+    room = RoomShortSerializer(read_only=True)
+    guest = MyUserSerializer(read_only=True)
+    description = serializers.CharField(max_length=300)
 
     class Meta:
         model = Reservation
-        fields = ('id', 'room', 'guest')
+        fields = ('id', 'description','guest', 'room')
 
 
-class ReservationFullSerializer(ReservationShortSerializer):
-    hotel = HotelFullSerializer()
+class ReservationFullSerializer(RoomShortSerializer):
+    hotel = HotelFullSerializer(read_only=True)
 
     class Meta(ReservationShortSerializer.Meta):
-        fields = ReservationShortSerializer.Meta.fields + (
-            'description', 'start_date', 'end_date', 'terminate', 'hotel')
+        fields = ReservationShortSerializer.Meta.fields + ('hotel', 'start_date', 'end_date', 'terminate', 'description')
