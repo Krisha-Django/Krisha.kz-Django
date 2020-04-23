@@ -5,7 +5,7 @@ from .models import MyUser, Profile
 
 @admin.register(MyUser)
 class MyUserAdmin(UserAdmin):
-    list_display = ('username', 'email', 'is_staff','is_super_man')
+    list_display = ('username', 'email', 'is_staff','role')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
     )

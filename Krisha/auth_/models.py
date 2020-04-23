@@ -34,13 +34,19 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class MyUser(MyAbstractUser):
-    is_super_man = models.BooleanField(
-        default=False,
-        help_text='Just custom is_admin field')
+    USER_ROLES = (
+        (1, 'Admin'),
+        (2, 'Customer'),
+    )
 
-    def __str__(self):
-        super_man = 'super man' if self.is_super_man else 'not super man'
-        return f'{self.username}: {super_man}'
+    role = models.IntegerField(choices=USER_ROLES, default=2)
+    # is_super_man = models.BooleanField(
+    #     default=False,
+    #     help_text='Just custom is_admin field')
+
+    # def __str__(self):
+    #     super_man = 'super man' if self.is_super_man else 'not super man'
+    #     return f'{self.username}: {super_man}'
 
 
 class ProfileManager(models.Manager):

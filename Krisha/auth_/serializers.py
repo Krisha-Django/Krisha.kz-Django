@@ -6,7 +6,7 @@ class MyUserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True)
     class Meta:
         model = MyUser
-        fields = ('username', 'is_super_man','email')
+        fields = ('username', 'role','email')
 
 
 class ProfileSerializer(serializers.ModelSerializer):

@@ -1,4 +1,5 @@
 from rest_framework import viewsets, status, mixins
+from rest_framework.permissions import IsAuthenticated
 from .serializers import HotelFullSerializer, HotelShortSerializer
 from .models import Hotel
 # Create your views here.
@@ -10,6 +11,8 @@ class HotelView(mixins.CreateModelMixin,
                 mixins.RetrieveModelMixin,
                 mixins.DestroyModelMixin,
                 viewsets.GenericViewSet):
+
+    # permission_classes = (IsAuthenticated,)
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.kwargs.get('pk'):
@@ -19,6 +22,7 @@ class HotelView(mixins.CreateModelMixin,
             return HotelFullSerializer
 
     def get_queryset(self):
+
         star_number = self.request.query_params.get('type_by_star', None)
 
         if star_number == '1':
