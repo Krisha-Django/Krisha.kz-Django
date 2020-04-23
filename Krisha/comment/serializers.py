@@ -3,18 +3,19 @@ from .models import Comment
 from hotel.serializers import HotelShortSerializer
 from auth_.serializers import MyUserSerializer
 
-class CommentSerializer(serializers.Serializer):
-    text = serializers.CharField(max_length=300)
+
+class CommentShortSerializer(serializers.ModelSerializer):
+    text = serializers.CharField(required=False)
     created_date = serializers.DateTimeField(required=False)
+
+    class Meta:
+        model = Comment
+        fields = ('id','text','created_date')
+
+
+class CommentFullSerializer(CommentShortSerializer):
     hotel = HotelShortSerializer(read_only=True)
     user = MyUserSerializer(read_only=True)
 
-    def create(self, validated_data):
-        return Comment.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.text = validated_data.get('text', instance.text)
-        instance.created_date = validated_data.get('created_date',instance.created_date)
-        instance.hotel = validated_data.get('hotel', instance.hotel)
-        instance.save()
-        return instance
+    class Meta(HotelShortSerializer.Meta):
+        fields = CommentShortSerializer.Meta.fields + ('user', 'hotel')
