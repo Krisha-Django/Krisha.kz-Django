@@ -29,6 +29,7 @@ class RoomStatusManager(models.Manager):
         return super(RoomStatusManager, self).get_queryset().filter(status=False)
 
 
+
 # Create your models here.
 class Room(models.Model):
     TYPE = (
@@ -54,3 +55,5 @@ class Room(models.Model):
 
     def __str__(self):
         return self.room_number
+
+
