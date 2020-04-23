@@ -1,7 +1,6 @@
 from django.db import models
 from city.models import City
 
-
 # Create your models here.
 class HotelStarsManager(models.Manager):
     def one_starred_hotels(self):
@@ -163,7 +162,7 @@ class Hotel(models.Model):
     @property
     def get_basic_information(self):
         return f'Name: {self.name}. Star: {self.type_by_star}. Description: {self.description}'
-
+    #
     # @property
-    # def get_total_likes(self):
-    #     return self.like
+    # def likes_count(self):
+    #     return Like.objects.filter(Hotel=self).count()

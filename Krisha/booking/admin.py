@@ -6,5 +6,5 @@ from .models import Reservation
 
 @admin.register(Reservation)
 class CityAdmin(admin.ModelAdmin):
-    list_display = ('reservation_id', 'guest_id', 'room')
+    list_display = ('id', 'guest_id', 'room')
     search_fields = ['quest_id']
