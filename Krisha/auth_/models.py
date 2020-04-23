@@ -6,7 +6,7 @@ from django.contrib.auth.models import PermissionsMixin, UserManager
 class MyUserManager(UserManager):
     pass
 
-
+#
 class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, null=False, unique=True)
     first_name = models.CharField(max_length=255, null=False, default='')
@@ -30,7 +30,11 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class MyUser(MyAbstractUser):
-    pass
+    card_number = models.CharField(max_length=16, default=0)
+
+    class Meta:
+        verbose_name = 'my_user'
+        verbose_name_plural = 'my_users'
 
 
 class ProfileManager(models.Manager):
