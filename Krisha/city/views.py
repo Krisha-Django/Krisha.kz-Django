@@ -1,6 +1,10 @@
+from django.http import Http404
 from django.shortcuts import render
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from hotel.serializers import HotelFullSerializer, HotelShortSerializer
+
 from .models import City
 from .serializers import CitySerializer
 from rest_framework.response import Response
@@ -40,3 +44,18 @@ def city_detail(request, pk, format=None):
     elif request.method == 'DELETE':
         city.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class CityHotelsAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return HotelShortSerializer
+
+    def get_queryset(self):
+        try:
+            city = City.objects.get(id=self.kwargs['pk'])
+        except City.DoesNotExist:
+            raise Http404
+        return city.hotels.all()
