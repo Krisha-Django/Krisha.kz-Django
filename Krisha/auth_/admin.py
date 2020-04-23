@@ -5,11 +5,13 @@ from .models import MyUser, Profile
 
 @admin.register(MyUser)
 class MyUserAdmin(UserAdmin):
-    list_display = ('username', 'email',)
+    list_display = ('username', 'email', 'is_staff','is_super_man')
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
     )
 
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'card_number', 'city')
 
-# admin.register(MyUser)
-admin.site.register(Profile)
+

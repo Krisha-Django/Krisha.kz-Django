@@ -24,5 +24,5 @@ urlpatterns = [
     path('rooms/',include('room.urls')),
     path('likes/', include('like.urls')),
     path('reservations/', include('booking.urls')),
-    # path('reservations/', include('booking.urls')),
+    path('auth/',include('auth_.urls'))
 ]
