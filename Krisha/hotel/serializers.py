@@ -1,17 +1,17 @@
 from rest_framework import serializers
 from .models import Hotel
 from city.serializers import CitySerializer
-
+from .validators import validate_name, validated_image
 from city.models import City
 
 
-
 class HotelShortSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=False)
+    name = serializers.CharField(required=False,validators=[validate_name])
+    image = serializers.ImageField(required=False,validators=[validated_image])
 
     class Meta:
         model = Hotel
-        fields = ('id', 'name', 'type_by_star')
+        fields = ('id', 'name', 'type_by_star', 'image')
 
 
 class HotelFullSerializer(HotelShortSerializer):

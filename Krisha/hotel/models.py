@@ -1,5 +1,7 @@
 from django.db import models
 from city.models import City
+from .validators import validate_name, validated_contact,validated_image
+
 
 # Create your models here.
 class HotelStarsManager(models.Manager):
@@ -94,6 +96,7 @@ class HotelSizeManager(models.Manager):
 class HotelManager(models.Manager):
     pass
 
+
 class Hotel(models.Model):
     TYPE_BY_STAR = (
         (1, "One Star"),
@@ -130,16 +133,16 @@ class Hotel(models.Model):
         ("L", "Large"),
         ("MG", "MEGA")
     )
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, validators=[validate_name])
     description = models.CharField(max_length=255)
     type_by_size = models.CharField(max_length=2, choices=TYPE_BY_SIZE, default="M")
     type_by_location = models.IntegerField(choices=TYPE_BY_LOCATION, default=1)
     type_by_target = models.IntegerField(choices=TYPE_BY_TARGET, default=1)
     type_by_star = models.IntegerField(choices=TYPE_BY_STAR, default=3)
-    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='hotels',null=True,blank=True)
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='hotels', null=True, blank=True)
     address = models.CharField(max_length=255, default=city.name)
-    # image = models.ImageField(upload_to='hotel_images', null=True, blank=True)
-    contact = models.CharField(max_length=20)
+    image = models.ImageField(upload_to='hotel_images', null=True, blank=True,validators=[validated_image])
+    contact = models.CharField(max_length=12, validators=[validated_contact])
 
     objects = HotelManager()
     by_stars_objects = HotelStarsManager()

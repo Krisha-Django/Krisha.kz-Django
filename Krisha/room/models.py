@@ -1,6 +1,7 @@
 from django.db import models
 from hotel.models import Hotel
 from auth_.models import MyUser
+from .validators import validated_price,validated_room_number
 
 
 class RoomManager(models.Manager):
@@ -29,7 +30,6 @@ class RoomStatusManager(models.Manager):
         return super(RoomStatusManager, self).get_queryset().filter(status=False)
 
 
-
 # Create your models here.
 class Room(models.Model):
     TYPE = (
@@ -38,12 +38,12 @@ class Room(models.Model):
         (3, 'Triple'),
         (4, 'Quad')
     )
-    room_number = models.CharField(max_length=10000)
+    room_number = models.CharField(max_length=5, default=0, validators=[validated_room_number])
     room_description = models.CharField(max_length=300, default="Description")
     type = models.IntegerField(choices=TYPE, default=1)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms', null=True, blank=True)
     status = models.BooleanField(default=False)
-    price = models.IntegerField(default=10000)
+    price = models.IntegerField(default=10000, validators=[validated_price])
 
     rooms_by_types = RoomTypeManager()
     rooms_by_status = RoomStatusManager()
@@ -55,5 +55,3 @@ class Room(models.Model):
 
     def __str__(self):
         return self.room_number
-
-
