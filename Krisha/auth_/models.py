@@ -8,9 +8,9 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, null=False, unique=True)
     first_name = models.CharField(max_length=255, null=False, default='')
     last_name = models.CharField(max_length=255, null=False, default='')
-    email = models.EmailField(blank=True)
+    email = models.EmailField(blank=True,unique=True)
     birthday = models.DateField(null=True)
-    mobile = models.CharField(max_length=12, null=True)
+    mobile = models.CharField(max_length=12, null=True,unique=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -24,7 +24,7 @@ class MyAbstractUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'user'
         verbose_name_plural = 'users'
         abstract = True
-
+        unique_together = ('first_name', 'last_name')
     def get_full_name(self):
         full_name = '%s %s' % (self.first_name, self.last_name)
         return full_name.strip()
