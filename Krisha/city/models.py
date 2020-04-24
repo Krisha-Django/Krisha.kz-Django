@@ -1,11 +1,10 @@
 from django.db import models
-
-
+from .validators import validate_name
 # Create your models here.
 
 class City(models.Model):
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, validators=[validate_name])
 
     class Meta:
         verbose_name = "City"
