@@ -1,4 +1,3 @@
-
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
@@ -8,7 +7,6 @@ from room.models import Room
 
 @receiver(post_save, sender=Reservation)
 def reservation_created(sender, instance, update_fields, **kwargs):
-    if update_fields:
         room = instance.room
         status = False
         if room.status:
@@ -16,6 +14,7 @@ def reservation_created(sender, instance, update_fields, **kwargs):
         else:
             status = True
         Room.objects.filter(id=room.id).update(status=status)
+
 
 @receiver(post_save, sender=Reservation)
 def reservation_terminated(sender, instance, **kwargs):
@@ -25,11 +24,7 @@ def reservation_terminated(sender, instance, **kwargs):
         status = True
         if terminated:
             status = False
-        Room.objects.filter(id=room.id).update(status = status)
-
-
-
-
+        Room.objects.filter(id=room.id).update(status=status)
 
     # @receiver([post_save, post_delete, post_update], sender=PointAward)
     # def on_point_award_changed(sender, **kwargs):
@@ -37,8 +32,3 @@ def reservation_terminated(sender, instance, **kwargs):
     #     if instance:
     #         key = 'acct-{0}-points'.format(instance.id)
     #         cache.delete(key)
-
-
-
-
-

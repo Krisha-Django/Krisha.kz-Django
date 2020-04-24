@@ -27,6 +27,7 @@ class HotelView(mixins.CreateModelMixin,
         else:
             return HotelFullSerializer
 
+
     def get_queryset(self):
 
         star_number = self.request.query_params.get('type_by_star', None)

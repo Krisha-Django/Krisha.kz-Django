@@ -41,7 +41,7 @@ class Room(models.Model):
     room_number = models.CharField(max_length=10000)
     room_description = models.CharField(max_length=300, default="Description")
     type = models.IntegerField(choices=TYPE, default=1)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms', null=True, blank=True)
     status = models.BooleanField(default=False)
     price = models.IntegerField(default=10000)
 

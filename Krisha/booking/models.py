@@ -17,8 +17,10 @@ class Reservation(models.Model):
     start_date = models.DateTimeField(default=datetime.now)
     end_date = models.DateTimeField(default=datetime.now)
     terminate = models.BooleanField(default=False)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="hotel")
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='reservation')
+    hotel = models.ForeignKey(Hotel,on_delete=models.CASCADE, related_name='hotel',blank=True, null=True)
+
+
 
     objects = ReservationManager()
 
