@@ -1,3 +1,7 @@
+from datetime import datetime
+import pytz
+from django.core.exceptions import ValidationError
+
 from .models import Reservation
 from rest_framework import serializers
 from room.serializers import RoomShortSerializer, RoomFullSerializer
@@ -8,6 +12,7 @@ from hotel.serializers import HotelFullSerializer, HotelShortSerializer
 class ReservationShortSerializer(serializers.ModelSerializer):
     room = RoomShortSerializer(read_only=True)
     guest = MyUserSerializer(read_only=True)
+
     # description = serializers.CharField(max_length=300)
 
     class Meta:

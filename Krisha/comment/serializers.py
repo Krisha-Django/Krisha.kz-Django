@@ -2,15 +2,15 @@ from rest_framework import serializers
 from .models import Comment
 from hotel.serializers import HotelShortSerializer
 from auth_.serializers import MyUserSerializer
-
+from .validators import validated_text
 
 class CommentShortSerializer(serializers.ModelSerializer):
-    text = serializers.CharField(required=False)
+    text = serializers.CharField(required=False, validators=[validated_text])
     created_date = serializers.DateTimeField(required=False)
 
     class Meta:
         model = Comment
-        fields = ('id','text','created_date')
+        fields = ('id', 'text', 'created_date')
 
 
 class CommentFullSerializer(CommentShortSerializer):
