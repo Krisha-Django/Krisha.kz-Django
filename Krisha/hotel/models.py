@@ -133,7 +133,7 @@ class Hotel(models.Model):
         ("L", "Large"),
         ("MG", "MEGA")
     )
-    name = models.CharField(max_length=100, validators=[validate_name])
+    name = models.CharField(max_length=100, validators=[validate_name],unique=True)
     description = models.CharField(max_length=255)
     type_by_size = models.CharField(max_length=2, choices=TYPE_BY_SIZE, default="M")
     type_by_location = models.IntegerField(choices=TYPE_BY_LOCATION, default=1)
@@ -142,7 +142,7 @@ class Hotel(models.Model):
     city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='hotels', null=True, blank=True)
     address = models.CharField(max_length=255, default=city.name)
     image = models.ImageField(upload_to='hotel_images', null=True, blank=True,validators=[validated_image])
-    contact = models.CharField(max_length=12, validators=[validated_contact])
+    contact = models.CharField(max_length=12, validators=[validated_contact],unique=True)
 
     objects = HotelManager()
     by_stars_objects = HotelStarsManager()

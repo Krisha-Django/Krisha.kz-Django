@@ -4,7 +4,7 @@ from .validators import validate_name
 
 class City(models.Model):
 
-    name = models.CharField(max_length=50, validators=[validate_name])
+    name = models.CharField(max_length=50, validators=[validate_name],unique=True)
 
     class Meta:
         verbose_name = "City"
