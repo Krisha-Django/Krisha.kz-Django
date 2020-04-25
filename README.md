@@ -1,7 +1,8 @@
 # Krisha - online hotel reservation service 
 
  Team Members
-**Dana Sidakina** |
+
+**Dana Sidakina** 
 
 **Derbes Utebaliyev**
 
