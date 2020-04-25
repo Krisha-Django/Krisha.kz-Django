@@ -9,6 +9,8 @@ from .validators import validated__date
 from django.core.exceptions import ValidationError
 
 utc = pytz.UTC
+
+
 # Create your models here.
 
 class ReservationManager(models.Manager):
@@ -22,14 +24,13 @@ class Reservation(models.Model):
     end_date = models.DateTimeField(default=datetime.now)
     terminate = models.BooleanField(default=False)
     room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='reservation')
-    hotel = models.ForeignKey(Hotel,on_delete=models.CASCADE, related_name='hotel',blank=True, null=True)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='hotel', blank=True, null=True)
 
     def clean(self):
         start_date = self.start_date
         end_date = self.end_date
         if start_date > end_date:
             raise ValidationError("lel")
-
 
     objects = ReservationManager()
 

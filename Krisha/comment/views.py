@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, mixins, viewsets
 from .models import Comment
-from .serializers import CommentFullSerializer, CommentShortSerializer
+from .serializers import CommentFullSerializer, CommentShortSerializer,CommentSerializer
 
 
 # Create your views here.
@@ -20,7 +20,7 @@ class CommentViewSet(mixins.CreateModelMixin,
                 return CommentFullSerializer
             return CommentShortSerializer
         else:
-            return CommentFullSerializer
+            return CommentSerializer
 
     def get_queryset(self):
         return Comment.objects.all()

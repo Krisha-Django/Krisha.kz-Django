@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status, mixins
-from .serializers import RoomShortSerializer, RoomFullSerializer
+from .serializers import RoomShortSerializer, RoomFullSerializer,RoomPostPutSerializer
 from .models import Room
 
 # Create your views here.
@@ -18,7 +18,7 @@ class RoomView(mixins.CreateModelMixin,
                 return RoomFullSerializer
             return RoomShortSerializer
         else:
-            return RoomFullSerializer
+            return RoomPostPutSerializer
 
     def get_queryset(self):
         print(self.request.user.role)

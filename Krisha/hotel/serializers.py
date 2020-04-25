@@ -24,21 +24,14 @@ class HotelFullSerializer(HotelShortSerializer):
     class Meta(HotelShortSerializer.Meta):
         fields = HotelShortSerializer.Meta.fields + ('description', 'city', 'address', 'contact')
 
-    # def create(self, validated_data):
-    #     city = validated_data.pop('city')
-    #     ccity = City()
-    #     ccity.id = city['id']
-    #     ccity.name = city['name']
-    #     hotel = Hotel.objects.create(city=ccity,**validated_data)
-    #     return hotel
-    #
-    # def update(self, instance, validated_data):
-    #     instance.name = validated_data.get('name', instance.name)
-    #     instance.type_by_star = validated_data.get('type_by_star', instance.type_by_star)
-    #     instance.type_by_size = validated_data.get('type_by_size', instance.type_by_size)
-    #     instance.type_by_location = validated_data.get('type_by_location', instance.type_by_location)
-    #     instance.type_by_target = validated_data.get('type_by_target', instance.type_by_target)
-    #     instance.address = validated_data.get('address', instance.address)
-    #     instance.contact = validated_data.get('contact', instance.contact)
-    #     instance.save()
-    #     return instance
+
+class HotelPostPutSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(required=False)
+    description = serializers.CharField(required=False)
+    contact = serializers.CharField(required=False)
+    address = serializers.CharField(required=False)
+    type_by_star = serializers.IntegerField(required=False)
+
+    class Meta:
+        model = Hotel
+        fields = '__all__'

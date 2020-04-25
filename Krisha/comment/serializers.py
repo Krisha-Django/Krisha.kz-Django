@@ -19,3 +19,13 @@ class CommentFullSerializer(CommentShortSerializer):
 
     class Meta(HotelShortSerializer.Meta):
         fields = CommentShortSerializer.Meta.fields + ('user', 'hotel')
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    text= serializers.CharField(required=False)
+    created_date = serializers.DateTimeField(required=False)
+    approved = serializers.BooleanField(required=False)
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
