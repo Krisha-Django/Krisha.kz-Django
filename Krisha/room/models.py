@@ -8,6 +8,21 @@ class RoomManager(models.Manager):
     pass
 
 
+#
+# class RoomTypeManager(models.Manager):
+#     def single_rooms(self):
+#         return super(RoomTypeManager, self).get_queryset().filter(type=1)
+#
+#     def double_rooms(self):
+#         return super(RoomTypeManager, self).get_queryset().filter(type=2)
+#
+#     def triple_rooms(self):
+#         return super(RoomTypeManager, self).get_queryset().filter(type=3)
+#
+#     def quad_rooms(self):
+#         return super(RoomTypeManager, self).get_queryset().filter(type=4)
+#
+
 class RoomStatusManager(models.Manager):
     def reserved_rooms(self):
         return super(RoomStatusManager, self).get_queryset().filter(status=True)

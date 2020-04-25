@@ -1,11 +1,11 @@
-from rest_framework import generics
+from rest_framework import generics, mixins, viewsets
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from auth_.serializers import MyUserSerializer
-from auth_.models import MyUser,Profile
+from auth_.serializers import MyUserSerializer, ProfileSerializer, ProfileGetSerializer
+from auth_.models import MyUser, Profile
 
 
-class MyUserAPIView(generics.CreateAPIView):
+class MyUserAPIView(generics.CreateAPIView, ):
     permission_classes = (AllowAny,)
     serializer_class = MyUserSerializer
 
@@ -30,3 +30,34 @@ class MyUserAPIView(generics.CreateAPIView):
         user.set_password(password)
         user.save()
 
+
+class UserViewSet(
+    mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet):
+
+    def get_serializer_class(self):
+        return MyUserSerializer
+
+    def get_queryset(self):
+        return MyUser.objects.all()
+
+
+class ProfileViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
+    viewsets.GenericViewSet):
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ProfileGetSerializer
+        else:
+            return ProfileSerializer
+
+    def get_queryset(self):
+        return Profile.objects.all()

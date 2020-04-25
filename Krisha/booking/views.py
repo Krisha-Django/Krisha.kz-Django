@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from rest_framework import viewsets, status, mixins
-from .serializers import ReservationShortSerializer, ReservationFullSerializer
+from .serializers import ReservationShortSerializer, ReservationFullSerializer,ReservationSerializer
 from .models import Reservation
 
 
@@ -22,7 +22,7 @@ class ReservationView(mixins.CreateModelMixin,
                 return ReservationFullSerializer
             return ReservationShortSerializer
         else:
-            return ReservationFullSerializer
+            return ReservationSerializer
 
     def get_queryset(self):
         return Reservation.objects.all()

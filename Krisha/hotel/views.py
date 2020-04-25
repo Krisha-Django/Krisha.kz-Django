@@ -1,10 +1,10 @@
 from django.http import Http404
 from rest_framework import viewsets, status, mixins, generics
 from rest_framework.permissions import IsAuthenticated
-from .serializers import HotelFullSerializer, HotelShortSerializer
+from .serializers import HotelFullSerializer, HotelShortSerializer,HotelPostPutSerializer
 from room.serializers import RoomFullSerializer, RoomShortSerializer
 from comment.serializers import CommentFullSerializer, CommentShortSerializer
-from like.serializers import LikeSerializer
+from like.serializers import LikeSerializer,LikeFullSerializer
 from .models import Hotel
 
 
@@ -25,7 +25,7 @@ class HotelView(mixins.CreateModelMixin,
                 return HotelFullSerializer
             return HotelShortSerializer
         else:
-            return HotelFullSerializer
+            return HotelPostPutSerializer
 
     def get_queryset(self):
 
@@ -84,7 +84,7 @@ class HotelLikesAPIView(generics.ListCreateAPIView):
 
     def get_serializer_class(self):
         if self.request.method == "GET":
-            return LikeSerializer
+            return LikeFullSerializer
 
     def get_queryset(self):
         try:

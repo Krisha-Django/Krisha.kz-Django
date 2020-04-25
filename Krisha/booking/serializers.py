@@ -27,3 +27,14 @@ class ReservationFullSerializer(ReservationShortSerializer):
     class Meta(ReservationShortSerializer.Meta):
         fields = ReservationShortSerializer.Meta.fields + (
             'hotel', 'start_date', 'end_date', 'terminate', 'description')
+
+
+class ReservationSerializer(serializers.ModelSerializer):
+    description = serializers.CharField(required=False)
+    start_date = serializers.DateTimeField(required=False)
+    end_date = serializers.DateTimeField(required=False)
+    terminate = serializers.BooleanField(required=False)
+
+    class Meta:
+        model = Reservation
+        fields = '__all__'
