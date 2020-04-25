@@ -1,3 +1,5 @@
+import logging
+
 from django.http import Http404
 from rest_framework import viewsets, status, mixins, generics
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +12,7 @@ from like.serializers import LikeSerializer,LikeFullSerializer
 from .models import Hotel
 
 
+logger = logging.getLogger('hotel')
 # Create your views here.
 
 
@@ -45,6 +48,24 @@ class HotelView(mixins.CreateModelMixin,
             return Hotel.by_stars_objects.five_starred_hotels()
         else:
             return Hotel.objects.all()
+
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.save()
+            hotel_name = serializer.data['name']
+            hotel_id = serializer['id'].value
+            logger.info(f'Hotel with name {hotel_name} is created. ID ={hotel_id}')
+
+    def perform_update(self, serializer):
+        if serializer.is_valid():
+            serializer.save()
+            hotel_id = serializer['id'].value
+            logger.info(f'Hotel with id={hotel_id} was updated')
+
+    def perform_destroy(self, instance):
+        hotel_id = self.kwargs['pk']
+        instance.delete()
+        logger.info(f'Hotel with id={hotel_id} was deleted')
 
 
 class HotelRoomsAPIView(generics.ListCreateAPIView):

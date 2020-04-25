@@ -169,3 +169,97 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s -- %(asctime)s: %(message)s',
+        },
+        'simple': {
+            'format': '%(levelname)s -- %(message)s'
+        }
+    },
+    'handlers': {
+        'console_handler':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            'formatter':'simple'
+        },
+        'reservation_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'booking.log',
+            'formatter': 'verbose'
+        },
+        'city_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'city.log',
+            'formatter': 'verbose'
+        },
+        'hotel_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'hotel.log',
+            'formatter': 'verbose'
+        },
+        'auth__file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'auth_.log',
+            'formatter': 'verbose'
+        },
+        'comment_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'comment.log',
+            'formatter': 'verbose'
+        },
+        'like_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'like.log',
+            'formatter': 'verbose'
+        },
+        'room_file':{
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'room.log',
+            'formatter': 'verbose'
+        },
+
+    },
+    'loggers': {
+        'comment': {
+            'handlers': ['console_handler', 'comment_file'],
+            'level': 'DEBUG',
+        },
+        'reservation': {
+            'handlers': ['console_handler', 'reservation_file'],
+            'level': 'DEBUG',
+        },
+        'hotel': {
+            'handlers': [ 'console_handler', 'hotel_file'],
+            'level': 'DEBUG',
+        },
+        'room': {
+            'handlers': [ 'console_handler', 'room_file'],
+            'level': 'DEBUG',
+        },
+        'city': {
+            'handlers': [ 'console_handler', 'city_file'],
+            'level': 'DEBUG',
+        },
+        'like': {
+            'handlers': ['console_handler', 'like_file'],
+            'level': 'DEBUG',
+        },
+        'auth_': {
+            'handlers': ['auth__file', ],
+            'level': 'DEBUG'
+        }
+
+    },
+}

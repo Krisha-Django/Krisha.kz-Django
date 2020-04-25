@@ -1,3 +1,5 @@
+import logging
+
 from django.http import Http404
 from django.shortcuts import render
 from rest_framework import status, generics
@@ -12,7 +14,7 @@ from .models import City
 from .serializers import CitySerializer
 from rest_framework.response import Response
 
-
+logger = logging.getLogger('city')
 # Create your views here.
 @api_view(['GET', 'POST'])
 @permission_classes([IsAdmin, ])
@@ -25,6 +27,8 @@ def city_list(request, format=None):
         serializer = CitySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            city_name = serializer.data['name']
+            logger.info(f'City with name = {city_name} is created')
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -44,10 +48,14 @@ def city_detail(request, pk, format=None):
         serializer = CitySerializer(city, data=request.data)
         if serializer.is_valid():
             serializer.save()
+            city_name = serializer.data['name']
+            logger.info(f'City with name = {city_name} is updated')
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
+        city_id = city.id
         city.delete()
+        logger.info(f'City with id = {city_id} is deleted')
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
