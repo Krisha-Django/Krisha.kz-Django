@@ -1,8 +1,8 @@
-Krisha.kz - alternative version, only Hotel available
-
+h1 Krisha
+h2 - online hotel reservation service 
 # Team Members
-Dana Sidakina - dana
-Derbes Utebaliyev - derbess
+**Dana Sidakina**
+**Derbes Utebaliyev**
 
 
 
