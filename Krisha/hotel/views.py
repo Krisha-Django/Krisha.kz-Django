@@ -17,8 +17,8 @@ class HotelView(mixins.CreateModelMixin,
                 mixins.RetrieveModelMixin,
                 mixins.DestroyModelMixin,
                 viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticated,)
 
-    # permission_classes = (IsAuthenticated,)
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.kwargs.get('pk'):
@@ -26,7 +26,6 @@ class HotelView(mixins.CreateModelMixin,
             return HotelShortSerializer
         else:
             return HotelFullSerializer
-
 
     def get_queryset(self):
 
@@ -47,7 +46,7 @@ class HotelView(mixins.CreateModelMixin,
 
 
 class HotelRoomsAPIView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.request.method == "GET":
@@ -64,7 +63,7 @@ class HotelRoomsAPIView(generics.ListCreateAPIView):
 
 
 class HotelCommentsAPIView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.request.method == "GET":
@@ -79,8 +78,9 @@ class HotelCommentsAPIView(generics.ListCreateAPIView):
             raise Http404
         return hotel.comments.all()
 
+
 class HotelLikesAPIView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated,)
 
     def get_serializer_class(self):
         if self.request.method == "GET":

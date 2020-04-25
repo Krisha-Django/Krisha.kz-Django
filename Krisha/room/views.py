@@ -21,14 +21,19 @@ class RoomView(mixins.CreateModelMixin,
             return RoomFullSerializer
 
     def get_queryset(self):
-        type_ = self.request.query_params.get('type', None)
-        if type_ == '1':
-            return Room.rooms_by_types.single()
-        elif type_ == '2':
-            return Room.rooms_by_types.double_rooms()
-        elif type_ == '3':
-            return Room.rooms_by_types.triple_rooms()
-        elif type_ == '4':
-            return Room.rooms_by_types.quad_rooms()
-        else:
+        print(self.request.user.role)
+        if self.request.user.role == 1:
             return Room.objects.all()
+        else:
+            type_ = self.request.query_params.get('type', None)
+            rooms = Room.rooms_by_status.free_rooms()
+            if type_ == '1':
+                rooms = rooms.filter(type=1)
+            elif type_ == '2':
+                rooms = rooms.filter(type=2 )
+            elif type_ == '3':
+                rooms = rooms.filter(type =3)
+            elif type_ == '4':
+                rooms = rooms.filter(type =4)
+            return rooms.filter(status=False)
+

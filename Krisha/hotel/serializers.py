@@ -6,23 +6,23 @@ from city.models import City
 
 
 class HotelShortSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=False,validators=[validate_name])
-    image = serializers.ImageField(required=False,validators=[validated_image])
+    name = serializers.CharField(required=False, validators=[validate_name])
+
+    # image = serializers.ImageField(required=False, validators=[validated_image])
 
     class Meta:
         model = Hotel
-        fields = ('id', 'name', 'type_by_star', 'image')
+        fields = ('id', 'name', 'type_by_star',)
 
 
 class HotelFullSerializer(HotelShortSerializer):
-    city = CitySerializer(read_only=True)
+    city = CitySerializer(read_only=True, required=False)
     description = serializers.CharField(required=False)
     contact = serializers.CharField(required=False)
     address = serializers.CharField(required=False)
 
     class Meta(HotelShortSerializer.Meta):
-        fields = HotelShortSerializer.Meta.fields + ('description', 'type_by_size', 'type_by_location',
-                                                     'type_by_target', 'city', 'address', 'contact')
+        fields = HotelShortSerializer.Meta.fields + ('description', 'city', 'address', 'contact')
 
     # def create(self, validated_data):
     #     city = validated_data.pop('city')

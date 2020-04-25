@@ -4,9 +4,18 @@ from auth_.models import MyUser, Profile
 
 class MyUserSerializer(serializers.ModelSerializer):
     email = serializers.CharField(required=True)
+
     class Meta:
         model = MyUser
-        fields = ('username', 'role','email')
+        fields = ('username', 'role', 'email')
+
+    def create(self, validated_data):
+        user = MyUser.objects.create(**validated_data)
+        user.set_password(validated_data['password'])
+        user.is_staff = True
+        user.save()
+
+        return user
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -14,4 +23,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user','city','card_number')
+        fields = ('user', 'city', 'card_number')
