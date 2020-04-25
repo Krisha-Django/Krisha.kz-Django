@@ -22,7 +22,7 @@ class MyUserAPIView(generics.CreateAPIView):
         mobile = self.request.data.pop('mobile')
 
         user, created = MyUser.objects.get_or_create(username=username)
-        user.email= email
+        user.email = email
         user.first_name = firstname
         user.last_name = last_name
         user.role = role

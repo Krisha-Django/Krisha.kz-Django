@@ -16,3 +16,4 @@ class LikeSerializer(serializers.Serializer):
         instance.user = validated_data.get('user', instance.user)
         instance.save()
         return instance
+
