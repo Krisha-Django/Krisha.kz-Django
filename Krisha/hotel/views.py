@@ -1,6 +1,8 @@
 from django.http import Http404
 from rest_framework import viewsets, status, mixins, generics
 from rest_framework.permissions import IsAuthenticated
+
+from auth_.permissions import IsAdmin
 from .serializers import HotelFullSerializer, HotelShortSerializer,HotelPostPutSerializer
 from room.serializers import RoomFullSerializer, RoomShortSerializer
 from comment.serializers import CommentFullSerializer, CommentShortSerializer
@@ -17,7 +19,7 @@ class HotelView(mixins.CreateModelMixin,
                 mixins.RetrieveModelMixin,
                 mixins.DestroyModelMixin,
                 viewsets.GenericViewSet):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdmin,)
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -46,7 +48,7 @@ class HotelView(mixins.CreateModelMixin,
 
 
 class HotelRoomsAPIView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdmin,)
 
     def get_serializer_class(self):
         if self.request.method == "GET":
@@ -60,6 +62,8 @@ class HotelRoomsAPIView(generics.ListCreateAPIView):
         except Hotel.DoesNotExist:
             raise Http404
         return hotel.rooms.all()
+
+
 
 
 class HotelCommentsAPIView(generics.ListCreateAPIView):

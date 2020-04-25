@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status, mixins
+from rest_framework import viewsets, status, mixins, decorators
+
+from auth_.permissions import IsAdmin
 from .serializers import RoomShortSerializer, RoomFullSerializer,RoomPostPutSerializer
 from .models import Room
 
@@ -12,6 +14,7 @@ class RoomView(mixins.CreateModelMixin,
                mixins.RetrieveModelMixin,
                mixins.DestroyModelMixin,
                viewsets.GenericViewSet):
+    permission_classes = (IsAdmin,)
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.kwargs.get('pk'):
@@ -21,7 +24,7 @@ class RoomView(mixins.CreateModelMixin,
             return RoomPostPutSerializer
 
     def get_queryset(self):
-        print(self.request.user.role)
+        # print(self.request.user.role)
         if self.request.user.role == 1:
             return Room.objects.all()
         else:

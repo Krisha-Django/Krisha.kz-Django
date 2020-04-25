@@ -1,8 +1,11 @@
 from django.http import Http404
 from django.shortcuts import render
 from rest_framework import status, generics
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+
+from auth_ import permission
+from auth_.permissions import IsAdmin
 from hotel.serializers import HotelFullSerializer, HotelShortSerializer
 
 from .models import City
@@ -12,6 +15,7 @@ from rest_framework.response import Response
 
 # Create your views here.
 @api_view(['GET', 'POST'])
+@permission_classes([IsAdmin, ])
 def city_list(request, format=None):
     if request.method == 'GET':
         cities = City.objects.all()
@@ -26,6 +30,7 @@ def city_list(request, format=None):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAdmin, ])
 def city_detail(request, pk, format=None):
     try:
         city = City.objects.get(pk=pk)

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import Http404
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, mixins, viewsets
@@ -14,6 +15,7 @@ class CommentViewSet(mixins.CreateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.DestroyModelMixin,
                   viewsets.GenericViewSet):
+    permission_classes = (IsAuthenticated,)
     def get_serializer_class(self):
         if self.request.method == 'GET':
             if self.kwargs.get('pk'):
