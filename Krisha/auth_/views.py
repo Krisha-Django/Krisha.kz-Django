@@ -1,8 +1,11 @@
+import logging
+
 from rest_framework import generics, mixins, viewsets
 
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from auth_.serializers import MyUserSerializer, ProfileSerializer, ProfileGetSerializer
 from auth_.models import MyUser, Profile
+logger = logging.getLogger('auth_')
 
 
 class MyUserAPIView(generics.CreateAPIView, ):
@@ -29,6 +32,7 @@ class MyUserAPIView(generics.CreateAPIView, ):
         user.mobile = mobile
         user.set_password(password)
         user.save()
+        logger.info(f'User with username = {username} has registered ')
 
 
 class UserViewSet(
@@ -37,6 +41,23 @@ class UserViewSet(
     mixins.RetrieveModelMixin,
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet):
+
+    # def destroy(self, request, *args, **kwargs):
+    #     user.delete()
+    #     print(request)
+    #     print(self.request.data)
+    def perform_destroy(self, instance):
+        user_name = instance.username
+        instance.delete()
+        logger.info(f'User with username = {user_name} was deleted')
+
+    def perform_update(self, serializer):
+        if serializer.is_valid():
+            serializer.save()
+            user_name = serializer.data['username']
+            logger.info(f'User with username = {user_name} was updated')
+
+
 
     def get_serializer_class(self):
         return MyUserSerializer
