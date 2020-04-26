@@ -5,14 +5,15 @@ from rest_framework import viewsets, status, mixins, generics
 from rest_framework.permissions import IsAuthenticated
 
 from auth_.permissions import IsAdmin
-from .serializers import HotelFullSerializer, HotelShortSerializer,HotelPostPutSerializer
+from .serializers import HotelFullSerializer, HotelShortSerializer, HotelPostPutSerializer
 from room.serializers import RoomFullSerializer, RoomShortSerializer
 from comment.serializers import CommentFullSerializer, CommentShortSerializer
-from like.serializers import LikeSerializer,LikeFullSerializer
+from like.serializers import LikeSerializer, LikeFullSerializer
 from .models import Hotel
 
-
 logger = logging.getLogger('hotel')
+
+
 # Create your views here.
 
 
@@ -85,8 +86,6 @@ class HotelRoomsAPIView(generics.ListCreateAPIView):
         return hotel.rooms.all()
 
 
-
-
 class HotelCommentsAPIView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
@@ -101,7 +100,7 @@ class HotelCommentsAPIView(generics.ListCreateAPIView):
             hotel = Hotel.objects.get(id=self.kwargs['pk'])
         except Hotel.DoesNotExist:
             raise Http404
-        return hotel.comments.all()
+        return hotel.comments.approved_comments()
 
 
 class HotelLikesAPIView(generics.ListCreateAPIView):

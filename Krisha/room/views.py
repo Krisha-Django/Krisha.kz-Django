@@ -30,7 +30,6 @@ class RoomView(mixins.CreateModelMixin,
             return RoomPostPutSerializer
 
     def get_queryset(self):
-        # print(self.request.user.role)
         if self.request.user.role == 1:
             return Room.objects.all()
         else:
@@ -44,7 +43,7 @@ class RoomView(mixins.CreateModelMixin,
                 rooms = rooms.filter(type=3)
             elif type_ == '4':
                 rooms = rooms.filter(type=4)
-            return rooms.filter(status=False)
+            return rooms
 
     def perform_create(self, serializer):
         if serializer.is_valid():
@@ -63,3 +62,5 @@ class RoomView(mixins.CreateModelMixin,
         room_id = self.kwargs['pk']
         instance.delete()
         logger.info(f'Room with id={room_id} was deleted')
+
+
