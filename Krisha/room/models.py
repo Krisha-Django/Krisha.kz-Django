@@ -8,20 +8,19 @@ class RoomManager(models.Manager):
     pass
 
 
-#
-# class RoomTypeManager(models.Manager):
-#     def single_rooms(self):
-#         return super(RoomTypeManager, self).get_queryset().filter(type=1)
-#
-#     def double_rooms(self):
-#         return super(RoomTypeManager, self).get_queryset().filter(type=2)
-#
-#     def triple_rooms(self):
-#         return super(RoomTypeManager, self).get_queryset().filter(type=3)
-#
-#     def quad_rooms(self):
-#         return super(RoomTypeManager, self).get_queryset().filter(type=4)
-#
+class RoomTypeManager(models.Manager):
+    def single_rooms(self):
+        return super(RoomTypeManager, self).get_queryset().filter(type=1,status=False)
+
+    def double_rooms(self):
+        return super(RoomTypeManager, self).get_queryset().filter(type=2,status=False)
+
+    def triple_rooms(self):
+        return super(RoomTypeManager, self).get_queryset().filter(type=3,status =False)
+
+    def quad_rooms(self):
+        return super(RoomTypeManager, self).get_queryset().filter(type=4, status=False)
+
 
 class RoomStatusManager(models.Manager):
     def reserved_rooms(self):
@@ -45,7 +44,7 @@ class Room(models.Model):
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms', null=True, blank=True)
     status = models.BooleanField(default=False)
     price = models.IntegerField(default=10000, validators=[validated_price])
-
+    rooms_by_type = RoomTypeManager()
     rooms_by_status = RoomStatusManager()
     objects = RoomManager()
 

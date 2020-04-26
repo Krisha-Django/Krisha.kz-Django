@@ -17,7 +17,7 @@ class ReservationShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Reservation
-        fields = ('id', 'description', 'guest', 'room')
+        fields = ('id', 'description', 'guest', 'room','terminate')
 
 
 class ReservationFullSerializer(ReservationShortSerializer):

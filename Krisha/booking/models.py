@@ -14,7 +14,11 @@ utc = pytz.UTC
 # Create your models here.
 
 class ReservationManager(models.Manager):
-    pass
+    def terminated(self):
+        return super(ReservationManager, self).get_queryset().filter(terminate=True)
+
+    def in_use(self):
+        return super(ReservationManager, self).get_queryset().filter(terminate=False)
 
 
 class Reservation(models.Model):
