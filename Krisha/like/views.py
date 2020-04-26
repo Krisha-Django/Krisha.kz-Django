@@ -13,14 +13,16 @@ from .models import Like
 from .serializers import LikeSerializer, LikeFullSerializer
 
 logger = logging.getLogger('like')
+
+
 # Create your views here.
 class LikeViewSet(mixins.CreateModelMixin,
                   mixins.ListModelMixin,
-                  mixins.UpdateModelMixin,
                   mixins.RetrieveModelMixin,
                   mixins.DestroyModelMixin,
                   viewsets.GenericViewSet):
     permission_classes = (IsAuthenticated,)
+
     def get_serializer_class(self):
         if self.request.method == "GET":
             return LikeFullSerializer
@@ -28,7 +30,9 @@ class LikeViewSet(mixins.CreateModelMixin,
             return LikeSerializer
 
     def get_queryset(self):
-            return Like.objects.all()
+        if self.request.user.role == 2:
+            return Like.objects.filter(user=self.request.user)
+        return Like.objects.all()
 
     def perform_create(self, serializer):
         if serializer.is_valid():

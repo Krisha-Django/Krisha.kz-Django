@@ -5,6 +5,7 @@ from rest_framework import generics, mixins, viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from auth_.serializers import MyUserSerializer, ProfileSerializer, ProfileGetSerializer
 from auth_.models import MyUser, Profile
+
 logger = logging.getLogger('auth_')
 
 
@@ -42,10 +43,6 @@ class UserViewSet(
     mixins.DestroyModelMixin,
     viewsets.GenericViewSet):
 
-    # def destroy(self, request, *args, **kwargs):
-    #     user.delete()
-    #     print(request)
-    #     print(self.request.data)
     def perform_destroy(self, instance):
         user_name = instance.username
         instance.delete()
@@ -57,12 +54,12 @@ class UserViewSet(
             user_name = serializer.data['username']
             logger.info(f'User with username = {user_name} was updated')
 
-
-
     def get_serializer_class(self):
         return MyUserSerializer
 
     def get_queryset(self):
+        if self.request.user.role == 2:
+            return MyUser.objects.filter(id=self.request.user.id)
         return MyUser.objects.all()
 
 
@@ -81,4 +78,7 @@ class ProfileViewSet(
             return ProfileSerializer
 
     def get_queryset(self):
+        print(self.request.user.role)
+        if self.request.user.role == 2:
+            return Profile.objects.filter(user=self.request.user)
         return Profile.objects.all()

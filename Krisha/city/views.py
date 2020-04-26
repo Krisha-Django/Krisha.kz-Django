@@ -6,7 +6,6 @@ from rest_framework import status, generics
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
-from auth_ import permission
 from auth_.permissions import IsAdmin
 from hotel.serializers import HotelFullSerializer, HotelShortSerializer
 

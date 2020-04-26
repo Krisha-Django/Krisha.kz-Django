@@ -18,6 +18,7 @@ class RoomView(mixins.CreateModelMixin,
                mixins.RetrieveModelMixin,
                mixins.DestroyModelMixin,
                viewsets.GenericViewSet):
+
     permission_classes = (IsAdmin,)
 
     def get_serializer_class(self):

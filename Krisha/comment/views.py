@@ -25,6 +25,8 @@ class CommentViewSet(mixins.CreateModelMixin,
             return CommentSerializer
 
     def get_queryset(self):
+        if self.request.user.role == 2:
+            return Comment.objects.filter(author=self.request.user)
         return Comment.objects.all()
 
 # class CommentList(APIView):
