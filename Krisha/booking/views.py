@@ -26,6 +26,8 @@ class ReservationView(mixins.CreateModelMixin,
             return ReservationSerializer
 
     def get_queryset(self):
+        if self.request.user.role == 2:
+            return Reservation.objects.filter(guest=self.request.user)
         return Reservation.objects.all()
 
     def perform_create(self, serializer):
